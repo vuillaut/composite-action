@@ -6,12 +6,12 @@ echo "repository url: $REPOSITORY_URL"
 
 mkdir -p $OUTPUT_DIR
 
+OLDIFS=$IFS
 IFS='/'
 read -a strarr <<< $REPOSITORY_URL
 OWNER_NAME=${strarr[-2]}
 PROJECT_NAME=${strarr[-1]}
-
-
+IFS=$OLDIFS
 echo "Deduced project name: $PROJECT_NAME"
 
 LAST_RELEASE=`git tag | tail -1`
