@@ -9,6 +9,12 @@ inputs:
   token:  # zenodo token
     description: Zenodo TOKEN
     required: true
+  project_name: 
+    description: Project name that will be given to the zip archive
+    required: true
+  repository_url:
+    description: Repository URL - can be given as $GITHUB_SERVER_URL/$GITHUB_REPOSITORY
+    required: true
 outputs:
   random-number:
     description: "Random number"
@@ -17,7 +23,7 @@ runs:
   using: "composite"
   steps:
     - run: |
-        ${{ github.action_path }}/zenodo_prepare_upload.sh ${{ inputs.output_dir }}
+        ${{ github.action_path }}/zenodo_prepare_upload.sh ${{ inputs.output_dir }} ${{ inputs.project_name }} ${{ inputs.repository_url }}
         upload_new_deposit --token ${{ inputs.token }} --sandbox True --input-dir ${{ inputs.output_dir }}
       shell: bash
     - id: random-number-generator
