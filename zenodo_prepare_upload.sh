@@ -9,7 +9,8 @@ if [ -z "$LAST_RELEASE" ]; then LAST_RELEASE="master"; fi;
 echo "Last release is $LAST_RELEASE"
 ARCHIVE="$PROJECT_NAME-$LAST_RELEASE.zip"
 wget -O $ARCHIVE $REPOSITORY_BASE_URL/archive/$LAST_RELEASE.zip
+ls .
 mv $ARCHIVE $OUTPUT_DIR
-if test -f codemeta.json; then echo "adding codemeta.json file to $OUTPUT_DIR"; cp codemeta.json $OUTPUT_DIR; fi;
-echo "Content of $OUTPUT_DIR:"
+if test -f codemeta.json; then echo "adding codemeta.json file to $OUTPUT_DIR"; cp codemeta.json $OUTPUT_DIR; else echo "no codemeta.json file to add"; fi;
+echo "Content of $OUTPUT_DIR :"
 ls $OUTPUT_DIR
