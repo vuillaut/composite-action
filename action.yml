@@ -9,6 +9,9 @@ inputs:
   token:  # zenodo token
     description: Zenodo TOKEN
     required: true
+  repository_url:
+    description: Repository URL - can be given as $GITHUB_SERVER_URL/$GITHUB_REPOSITORY
+    required: true
 outputs:
   random-number:
     description: "Random number"
