@@ -8,9 +8,9 @@ mkdir -p $OUTPUT_DIR
 
 IFS='/'
 read -a strarr <<< $REPOSITORY_URL
-GITHUB_ORG=${strarr[0]}
-OWNER_NAME=${strarr[1]}
-PROJECT_NAME=${strarr[2]}
+OWNER_NAME=${strarr[-2]}
+PROJECT_NAME=${strarr[-1]}
+
 
 echo "Deduced project name: $PROJECT_NAME"
 
