@@ -1,10 +1,6 @@
-name: 'OSSR-record-setup'
-description: 'Prepare a directory before upload to the OSSR'
+name: 'OSSR-new-record'
+description: 'Upload new record to the OSSR'
 inputs:
-  output_dir:  # id of input
-    description: 'Output directory'
-    required: true
-    default: 'build'
   repository_url:
     description: Repository URL - can be given as $GITHUB_SERVER_URL/$GITHUB_REPOSITORY
     required: true
@@ -15,25 +11,17 @@ inputs:
     description: Using sandbox if True
     required: false
     default: False
-outputs:
-  random-number:
-    description: "Random number"
-    value: ${{ steps.random-number-generator.outputs.random-id }}
+
 runs:
   using: "composite"
   steps:
     - run: |
-        ${{ github.action_path }}/zenodo_prepare_upload.sh ${{ inputs.output_dir }} ${{ inputs.repository_url }} 
+        ${{ github.action_path }}/zenodo_prepare_upload.sh BUILD_OSSR ${{ inputs.repository_url }} 
         echo "preparation over"
-      shell: bash
-    - id: random-number-generator
-      run: echo "::set-output name=random-id::$(echo $RANDOM)"
-      shell: bash
-    - run: ${{ github.action_path }}/goodbye.sh
       shell: bash
     - name: upload to OSSR
       uses: docker://gitlab-registry.in2p3.fr/escape2020/wp3/zenodoci:v1.2
       with:
         entrypoint: upload_new_deposit
-        args:  --token ${{ inputs.token }} --sandbox ${{ inputs.sandbox }} --input-dir ${{ inputs.output_dir }}
+        args:  --token ${{ inputs.token }} --sandbox ${{ inputs.sandbox }} --input-dir BUILD_OSSR
 
