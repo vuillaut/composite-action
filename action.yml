@@ -1,36 +1,19 @@
-name: 'Hello World'
-description: 'Greet someone'
-container: gitlab-registry.in2p3.fr/escape2020/wp3/zenodoci:v1.2
+name: 'OSSR-record-setup'
+description: 'Prepare a directory before upload to the OSSR'
 inputs:
   output_dir:  # id of input
     description: 'Output directory'
     required: true
     default: 'build'
-  token:  # zenodo token
-    description: Zenodo TOKEN
-    required: true
   repository_url:
     description: Repository URL - can be given as $GITHUB_SERVER_URL/$GITHUB_REPOSITORY
     required: true
-  sandbox:
-    description: boolean to use sandbox or not (true to use sandbox - in this case you need to pass a token from sandbox.zenodo.org)
-    required: false
-    default: False
-outputs:
-  random-number:
-    description: "Random number"
-    value: ${{ steps.random-number-generator.outputs.random-id }}
 runs:
   using: "composite"
   steps:
-    - uses: docker: gitlab-registry.in2p3.fr/escape2020/wp3/zenodoci:v1.2
-    - name: publish to zenodo
+    - name: prepare directory to zenodo
     - run: |
-        ${{ github.action_path }}/zenodo_prepare_upload.sh ${{ inputs.output_dir }} ${{ inputs.repository_url }} 
-        upload_new_deposit --token ${{ inputs.token }} --sandbox ${{ inputs.sandbox }} --input-dir ${{ inputs.output_dir }}
-      shell: bash
-    - id: random-number-generator
-      run: echo "::set-output name=random-id::$(echo $RANDOM)"
+        ${{ github.action_path }}/zenodo_prepare_upload.sh ${{ inputs.output_dir }} ${{ inputs.repository_url }}
       shell: bash
     - run: ${{ github.action_path }}/goodbye.sh
       shell: bash
