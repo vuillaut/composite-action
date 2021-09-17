@@ -2,10 +2,10 @@ name: 'Hello World'
 description: 'Greet someone'
 container: gitlab-registry.in2p3.fr/escape2020/wp3/zenodoci:v1.2
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  output_dir:  # id of input
+    description: 'Output directory'
     required: true
-    default: 'World'
+    default: 'build'
 outputs:
   random-number:
     description: "Random number"
@@ -13,7 +13,7 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - run: echo Hello ${{ inputs.who-to-greet }}.
+    - run: zenodo_prepare_upload.sh ${{ inputs.output_dir }}.
       shell: bash
     - id: random-number-generator
       run: echo "::set-output name=random-id::$(echo $RANDOM)"
