@@ -18,7 +18,7 @@ runs:
   steps:
     - run: |
         ${{ github.action_path }}/zenodo_prepare_upload.sh ${{ inputs.output_dir }} ${{ inputs.repository_url }} 
-        upload_new_deposit --token ${{ inputs.token }} --sandbox True --input-dir ${{ inputs.output_dir }}
+        echo "preparation over"
       shell: bash
     - id: random-number-generator
       run: echo "::set-output name=random-id::$(echo $RANDOM)"
