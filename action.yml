@@ -1,5 +1,6 @@
 name: 'OSSR-record-setup'
 description: 'Prepare a directory before upload to the OSSR'
+container: gitlab-registry.in2p3.fr/escape2020/wp3/zenodoci:v1.2
 inputs:
   output_dir:  # id of input
     description: 'Output directory'
@@ -8,11 +9,20 @@ inputs:
   repository_url:
     description: Repository URL - can be given as $GITHUB_SERVER_URL/$GITHUB_REPOSITORY
     required: true
+outputs:
+  random-number:
+    description: "Random number"
+    value: ${{ steps.random-number-generator.outputs.random-id }}
 runs:
   using: "composite"
   steps:
-    - name: prepare directory to zenodo
-    - run: ${{ github.action_path }}/zenodo_prepare_upload.sh ${{ inputs.output_dir }} ${{ inputs.repository_url }}
+    - run: |
+        ${{ github.action_path }}/zenodo_prepare_upload.sh ${{ inputs.output_dir }} ${{ inputs.repository_url }} 
+        upload_new_deposit --token ${{ inputs.token }} --sandbox True --input-dir ${{ inputs.output_dir }}
+      shell: bash
+    - id: random-number-generator
+      run: echo "::set-output name=random-id::$(echo $RANDOM)"
       shell: bash
     - run: ${{ github.action_path }}/goodbye.sh
       shell: bash
+
