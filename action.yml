@@ -19,8 +19,6 @@ runs:
   using: "composite"
   steps:
     - uses: actions/checkout@v2
-      with:
-        repository: ${{ inputs.repository_url }}
     - run: |
         ${{ github.action_path }}/zenodo_prepare_upload.sh BUILD_OSSR ${{ inputs.repository_url }} ${{ inputs.release }} 
         echo "preparation over"
