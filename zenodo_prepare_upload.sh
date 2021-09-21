@@ -17,8 +17,10 @@ echo "Deduced project name: $PROJECT_NAME"
 
 if [ -z "$RELEASE" ];
 then
+  echo "looking for a release in the repository"
   LAST_RELEASE=`git tag | tail -1`;
-  # if [ -z "$LAST_RELEASE" ]; then LAST_RELEASE="main"; fi;
+  echo "last release: $LAST_RELEASE"
+  if [ -z "$LAST_RELEASE" ]; then LAST_RELEASE="main"; fi;
   RELEASE=$LAST_RELEASE
 fi;
 echo "Upload based on $RELEASE";
