@@ -27,4 +27,4 @@ if test -f codemeta.json; then echo "adding codemeta.json file to $OUTPUT_DIR"; 
 
 
 echo "Content of $OUTPUT_DIR :"
-ls $OUTPUT_DIR
+ls -lsh $OUTPUT_DIR
