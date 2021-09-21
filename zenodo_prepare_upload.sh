@@ -20,7 +20,7 @@ then
   echo "looking for a release in the repository"
   ls -lsh
   echo $PWD
-  echo "`git tag`"
+  echo "`git`"
   LAST_RELEASE=`git tag | tail -1`;
   echo "last release: $LAST_RELEASE"
   if [ -z "$LAST_RELEASE" ]; then LAST_RELEASE="main"; fi;
