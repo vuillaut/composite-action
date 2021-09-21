@@ -1,5 +1,6 @@
 OUTPUT_DIR=$1
 REPOSITORY_URL=$2
+RELEASE=$3
 
 echo "output dir: $OUTPUT_DIR"
 echo "repository url: $REPOSITORY_URL"
@@ -14,9 +15,12 @@ PROJECT_NAME=${strarr[-1]}
 IFS=$OLDIFS
 echo "Deduced project name: $PROJECT_NAME"
 
-LAST_RELEASE=`git tag | tail -1`
-if [ -z "$LAST_RELEASE" ]; then LAST_RELEASE="master"; fi;
-echo "Last release is $LAST_RELEASE"
+if [[ -z ${RELEASE+z} ]];
+then
+  LAST_RELEASE=`git tag | tail -1`;
+  if [ -z "$LAST_RELEASE" ]; then LAST_RELEASE="main"; fi;
+  echo "Last release is $LAST_RELEASE";
+fi;
 
 ARCHIVE="$PROJECT_NAME-$LAST_RELEASE.zip"
 wget -O $ARCHIVE $REPOSITORY_URL/archive/$LAST_RELEASE.zip
