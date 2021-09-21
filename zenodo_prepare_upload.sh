@@ -15,15 +15,16 @@ PROJECT_NAME=${strarr[-1]}
 IFS=$OLDIFS
 echo "Deduced project name: $PROJECT_NAME"
 
-if [[ -z ${RELEASE+z} ]];
+if [ -z "$RELEASE" ];
 then
   LAST_RELEASE=`git tag | tail -1`;
   if [ -z "$LAST_RELEASE" ]; then LAST_RELEASE="main"; fi;
-  echo "Last release is $LAST_RELEASE";
+  RELEASE=$LAST_RELEASE
 fi;
+echo "Upload based on $RELEASE";
 
-ARCHIVE="$PROJECT_NAME-$LAST_RELEASE.zip"
-wget -O $ARCHIVE $REPOSITORY_URL/archive/$LAST_RELEASE.zip
+ARCHIVE="$PROJECT_NAME-$RELEASE.zip"
+wget -O $ARCHIVE $REPOSITORY_URL/archive/$RELEASE.zip
 ls .
 mv $ARCHIVE $OUTPUT_DIR
 
