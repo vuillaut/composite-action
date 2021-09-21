@@ -18,6 +18,7 @@ echo "Deduced project name: $PROJECT_NAME"
 if [ -z "$RELEASE" ];
 then
   echo "looking for a release in the repository"
+  echo "`which git`"
   echo "`git tag`"
   LAST_RELEASE=`git tag | tail -1`;
   echo "last release: $LAST_RELEASE"
