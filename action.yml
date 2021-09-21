@@ -11,6 +11,9 @@ inputs:
     description: Using sandbox if True
     required: false
     default: False
+  release:
+    description: release name. can also be "master" or "main". if not given, the last release will be used. if there are no release, main will be used.
+    required: false
 
 runs:
   using: "composite"
